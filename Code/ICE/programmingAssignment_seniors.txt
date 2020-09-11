@@ -1,0 +1,43 @@
+As part of our assesment process we would like to ask you to complete a below programming task.
+
+Feel free to complete it in your own time. If you do not finish it, please feel free to send in what you have as we're more interested in your approach to the problem than an exactly correct solution. If you have any questions, please feel free to get in contact with us. 
+
+
+**** Write a multicast server and client
+
+The attached input.txt contains a sample of data feed messages. Each message is made up of a varying number of token/value pairs of the form <token>=<value>. Each pair in a given message is separated by pipe ('|') characters (ascii 124). Each message is terminated with an ETX (ascii 3) character. A token is always a numeric value.
+And the token 5 is for Symbol. For example, 5=IBM. Here, IBM is the symbol name.
+
+Multicast Server:
+----------------
+
+1. Read the data/messages from the given file(input.txt) and multicast (UDP) those messages over the destination IP 225.1.1.7 and port 65071;
+2. The server application should have the options to specifiy - the input file name/path, destination IP, Port, the network interface of the server host, number of packets per second to be sent, maximum number of messages in a packet and the symbol for which the messages need to be sent. The option -symbol is not mandatory. If no -symbol option is given all the messages in the input.txt should be multicasted; If -symbol option given, only the messaged related to that symbol should be multicasted;
+
+Example usage of the server program should be -
+
+./server -infile <file path> -multicast <ip address> <port> <interface> -packetcount <count> -mmp <nn> [-symbol <symbol name>] 
+
+Example command for the above usage is -
+
+./server -infile /tmp/input.txt -multicast 225.1.1.7 65071 192.168.195.4 -packetcount 3 --mmp 5 -symbol IBM
+
+
+Multicast Client:
+----------------
+
+Read the multicast data disseminating from the multicast server by subscribing to the 225.1.1.7 port 65071
+Post each message of the symbol updating/overwriting the snapshot record in the memory/shared memory.
+So, for each symbol, there should be one record in the shared memory;
+And each record should have all the token/value pairs updated as and when the client receives messages from the server.
+The client program has to print on the console - the values of token 5 and token 8 taken from the shared memory
+The given input.txt has the data related to two symbols namely IBM and BAC. So you end up having two records in the inmemory shared memory.
+
+Example usage of the server program should be -
+
+./client -multicast <ip address> <port> <interface>
+
+Example command for the above usage is -
+
+./client -multicast 225.1.1.7 65071 192.168.195.126 //on a different machine
+
