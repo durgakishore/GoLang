@@ -1,0 +1,1 @@
+protoc -I complex/ --go_out=complex/ complex/complex.proto
